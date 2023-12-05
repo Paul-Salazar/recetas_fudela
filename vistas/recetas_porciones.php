@@ -167,8 +167,8 @@ include_once "../includes/header.php";
                                             <button class="btn btn-danger" type="button" style="display:none;" onclick="eliminarPaso(this)"><i class="fa fa-trash"></i></button>
                                         </div>
                                     </div>
-                                    <!-- Cuando se necesite solo poner los campos sin los nombres 
-                                    <div class="mt-3"></div>-->
+
+                                    <div class="mt-3"></div>
                                 </div>
                             </div>
                         </div>
@@ -272,7 +272,7 @@ include_once "../includes/header.php";
         $("#pasosContainer").append(nuevoPaso);
 
         // Agrega un espacio después del nuevo paso
-        // $("#pasosContainer").append('<div class="mt-3"></div>');
+        $("#pasosContainer").append('<div class="mt-3"></div>');
 
         // Muestra el botón de eliminar si hay más de un paso
         if ($("#pasosContainer .input-group").length > 1) {
