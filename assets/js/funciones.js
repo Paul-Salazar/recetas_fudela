@@ -352,3 +352,63 @@ function limpiar() {
     $('#id').val('');
     $('#btnAccion').val('Registrar');
 }
+
+function agregarPaso() {
+    // Clona el primer paso
+    var nuevoPaso = $("#pasosContainer .input-group:first").clone();
+    // Limpia el valor del nuevo paso
+    nuevoPaso.find("input").val("");
+
+    // Añade el nuevo paso al contenedor
+    $("#pasosContainer").append(nuevoPaso);
+
+    // Agrega un espacio después del nuevo paso
+    $("#pasosContainer").append('<div class="mt-3"></div>');
+
+    // Muestra el botón de eliminar si hay más de un paso
+    if ($("#pasosContainer .input-group").length > 1) {
+        $("#pasosContainer .input-group-append button.btn-danger").show();
+    }
+}
+
+function eliminarPaso(btn) {
+    // Elimina el paso padre del botón presionado
+    $(btn).closest(".input-group").remove();
+
+    // Oculta el botón de eliminar si hay solo un paso
+    if ($("#pasosContainer .input-group").length === 1) {
+        $("#pasosContainer .input-group-append button.btn-danger").hide();
+    }
+}
+
+function agregarIngrediente() {
+    // Clona la primera fila de ingredientes
+    var nuevaFila = $("#ingredientesContainer .ingredientes:last").clone();
+
+    // Encuentra el número actual de ingredientes
+    var numIngredientes = $("#ingredientesContainer .ingredientes").length;
+
+    // Actualiza el número del ingrediente en la nueva fila
+    nuevaFila.find('.numIngrediente').text("#" + (numIngredientes + 1));
+
+    // Añade la nueva fila de ingredientes al contenedor
+    $("#ingredientesContainer").append(nuevaFila);
+
+    // Muestra el botón de eliminar en la nueva fila
+    nuevaFila.find("button.btn-danger").show();
+}
+
+function eliminarIngrediente(btn) {
+    // Elimina la fila completa del grupo de ingredientes
+    $(btn).closest(".ingredientes").remove();
+
+    // Actualiza los números de ingredientes después de la eliminación
+    actualizarNumerosIngredientes();
+}
+
+function actualizarNumerosIngredientes() {
+    // Actualiza los números de ingredientes en todas las filas
+    $("#ingredientesContainer .ingredientes").each(function(index) {
+        $(this).find('.numIngrediente').text("#" + (index + 1));
+    });
+}
