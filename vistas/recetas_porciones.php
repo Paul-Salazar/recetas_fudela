@@ -163,11 +163,12 @@ include_once "../includes/header.php";
                                     <div class="input-group">
                                         <input type="text" name="paso" class="form-control">
                                         <div class="input-group-append">
+                                            <!-- Agrega pasos a la opción, llamando al script -->
                                             <button class="btn btn-primary" type="button" onclick="agregarPaso()"><i class="fa fa-plus"></i></button>
+                                            <!-- Elimina pasos a la opción, llamando al script -->
                                             <button class="btn btn-danger" type="button" style="display:none;" onclick="eliminarPaso(this)"><i class="fa fa-trash"></i></button>
                                         </div>
                                     </div>
-
                                     <div class="mt-3"></div>
                                 </div>
                             </div>
