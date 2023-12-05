@@ -1,0 +1,13 @@
+/*hover para aumentar las tarjetas del index en lista recetas*/
+.receta-item:hover{
+   
+    transform: scale(1.2);
+  }
+  /*cambio de color en botones*/
+  .mt-4 a:hover{
+    background: #fff;
+    color: rgb(26, 109, 218);
+    border:  solid 1px rgb(26, 109, 218);
+    transition-duration: .3s;
+  }
+  /*busqueda*/

@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates|Poppins&display=swap');
+	*{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: 'Montserrat Alternates', sans-serif;
+	}
+  /* Titulo menú horizontal*/
+    .h3{
+        color: rgb(247, 243, 243);
+    }
+    /*Titulo menú vertical*/
+    span{
+        color:rgb(245, 238, 238);
+    }
+    /*menú vertical*/
+    .sidebar-dark-blue{
+        background: rgba(36, 26, 23, 0.9)!important;
+      }
+      /*menú horizontal*/
+      .navbar{
+        background: rgba(36, 26, 23, 0.7)!important;
+      }

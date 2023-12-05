@@ -1,0 +1,32 @@
+
+h1 {  
+    color:#E74C3C     ;/* Color de la letra  (rojo) */
+    text-transform: capitalize;/* Tipo de letra  */
+    font-weight: 700;  /* El tono del color */
+
+    }
+h2 {  
+        color:#E74C3C     ;/* Color de la letra  (rojo) */
+        text-transform: capitalize;/* Tipo de letra  */
+        font-weight: 700;  /* El tono del color */
+    
+        }
+    
+h5 {
+    color:#EC7063 ;/* Color de Inicie seció (salmon) */
+    text-transform:initial;/* Tipo de letra  */
+    font-weight: 700;  /* El tono del color */
+   
+    }    
+    .btn  {
+        background-color:#7FB3D5 ;/* Color de fondo del botón (celeste) */
+        color:#2E4053 ; /* Color del texto del botón */
+        padding: 10px 20px; /* Espaciado interno del botón */
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 5px; /* Bordes redondeados */
+        border: none; /* Sin borde */
+        cursor: pointer;
+    }
