@@ -12,7 +12,7 @@ include "../includes/header.php";
     <div class="card">
     <div class="card-body">
     <label for="recetasSearch">Buscar Categorías:
-    <input id="recetasSearch" type="text" placeholder="Buscar recetas">
+    <input class="buscador1" id="recetasSearch" type="text" placeholder="Buscar recetas">
     </label>
     </div>
     </div>
