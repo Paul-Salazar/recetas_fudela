@@ -117,22 +117,22 @@ include_once "../includes/header.php";
                         <input type="datetime-local" class="form-control" name="txtFecha" value="<?php echo isset($data['fecha']) ? date("Y-m-d\TH:i", strtotime($data['fecha'])) : "" ?>" required>
                     </div>
                     <div class="">
-                            <div class="form-group">
-                                <label for="estado" class=" text-dark font-weight-bold">Estado</label>
-                                <select class="form-control" name="txtEstado" id="txtEstado">
-                                    <option value="1">Activada</option>
-                                    <option value="0">Desactivada</option>
-                                </select>
-                            </div>
-                    <div>
-                        
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Editar</button>
-                        <a href="../vistas/crear_recetas.php" class="btn btn-danger">Cancelar</a>
-                    </div>
+                        <div class="form-group">
+                            <label for="estado" class=" text-dark font-weight-bold">Estado</label>
+                            <select class="form-control" name="txtEstado" id="txtEstado">
+                                <option value="1">Activada</option>
+                                <option value="0">Desactivada</option>
+                            </select>
+                        </div>
+                        <div>
+
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Editar</button>
+                            <a href="../vistas/crear_recetas.php" class="btn btn-danger">Cancelar</a>
+                        </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
+</div>
 <?php include_once "../includes/footer.php"; ?>
