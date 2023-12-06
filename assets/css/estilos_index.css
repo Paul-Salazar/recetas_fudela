@@ -10,4 +10,22 @@
     border:  solid 1px rgb(26, 109, 218);
     transition-duration: .3s;
   }
-  /*busqueda*/
+  /*busqueda de Categorías*/
+  input{
+    padding: 5px;
+   /* padding-right: 500px;*/
+    width: 600px;
+    border-radius: 5px;
+    position: relative;
+   /* margin-left: 5px;*/
+}
+@media (max-width: 767px) {
+  input{
+    padding: 5px;
+   /* padding-right: 500px;*/
+    width: 600px;
+    border-radius: 5px;
+    position: relative;
+   /* margin-left: 5px;*/
+}
+}

@@ -3,24 +3,29 @@ session_start();
 if ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2 || $_SESSION['rol'] == 3) {
 include "../includes/header.php";
 ?>
-
 <div class="card">
+                    <div class="card-body">
+                    
     <div class="card-header text-center h3 text-success">
-    <img src = "https://cdn-icons-png.flaticon.com/512/1940/1940308.png "width="45" height="45">Lista De Categorías
+        Listas De Categorías
     </div>
-    <nav class="navbar" style="background-color: #e3f2fd;">
-    <label for="recetasSearch"><img src = "https://cdn-icons-png.flaticon.com/512/1022/1022319.png "width="45" height="45"/>
+    <div class="card">
+    <div class="card-body">
+    <label for="recetasSearch">Buscar Categorías:
     <input id="recetasSearch" type="text" placeholder="Buscar recetas">
-    </label></nav> 
+    </label>
+    </div>
+    </div>
+    <div class="card">
     <div class="card-body">
         <div class="row" width="100%">
             <?php
             include "../conexion.php";
 
-            // Número de registros por página
-            $registros_por_pagina = 4;
+            // Número de registros por página de categorias.
+            $registros_por_pagina = 5;
 
-            // Página actual (por defecto es la primera página)
+            // Página principal (por defecto es la primera página)
             $pagina_actual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 
             // Calcular el offset (inicio del conjunto de resultados para la página actual)
@@ -54,9 +59,12 @@ include "../includes/header.php";
                             </a>
                         </div>
                     </div>
+                    
                 <?php }
             } ?>
         </div>
+        </div>
+                    </div>
 
         <!-- Agregar la paginación -->
         <div class="col-12 mt-3">
@@ -64,7 +72,7 @@ include "../includes/header.php";
             $total_paginas = ceil($result / $registros_por_pagina);
 
             // Mostrar enlaces de paginación
-            for ($i = 1; $i <= $total_paginas; $i++) {
+            for ($i = 1; $i <= $registros_por_pagina; $i++) {
                 echo "<a href='index.php?pagina=$i' class='btn btn-info'>$i</a> ";
             }
             ?>
