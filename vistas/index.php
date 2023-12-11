@@ -1,6 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2 || $_SESSION['rol'] == 3) {
+
     include "../includes/header.php";
     ?>
     <div class="card">
@@ -30,6 +31,34 @@ if ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2 || $_SESSION['rol'] == 3) {
 
                         // Página principal (por defecto es la primera página)
                         $pagina_actual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
+
+include "../includes/header.php";
+?>
+<div class="card">
+                    <div class="card-body">
+                    
+    <div class="card-header text-center h3 text-success">
+        Listas De Categorías
+    </div>
+    <div class="card">
+    <div class="card-body">
+    <label for="recetasSearch">Buscar Categorías:
+    <input class="buscador1" id="recetasSearch" type="text" placeholder="Buscar recetas">
+    </label>
+    </div>
+    </div>
+    <div class="card">
+    <div class="card-body">
+        <div class="row" width="100%">
+            <?php
+            include "../conexion.php";
+
+            // Número de registros por página de categorias.
+            $registros_por_pagina = 5;
+
+            // Página principal (por defecto es la primera página)
+            $pagina_actual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
+
 
                         // Calcular el offset (inicio del conjunto de resultados para la página actual)
                         $offset = ($pagina_actual - 1) * $registros_por_pagina;
@@ -70,13 +99,23 @@ if ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2 || $_SESSION['rol'] == 3) {
                             <?php }
                         } ?>
                     </div>
+
                 </div>
             </div>
+
+                    
+                <?php }
+            } ?>
+        </div>
+        </div>
+                    </div>
+
 
             <!-- Agregar la paginación -->
             <div class="col-12 mt-3">
                 <?php
                 $total_paginas = ceil($total_registros / $registros_por_pagina);
+
 
                 // Mostrar enlaces de paginación
                 for ($i = 1; $i <= $total_paginas; $i++) {
@@ -84,6 +123,13 @@ if ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2 || $_SESSION['rol'] == 3) {
                 }
                 ?>
             </div>
+
+            // Mostrar enlaces de paginación
+            for ($i = 1; $i <= $registros_por_pagina; $i++) {
+                echo "<a href='index.php?pagina=$i' class='btn btn-info'>$i</a> ";
+            }
+            ?>
+
         </div>
     </div>
 
