@@ -1,8 +1,5 @@
 /*hover para aumentar las tarjetas del index en lista recetas*/
-.receta-item:hover{
-   
-    transform: scale(1.2);
-  }
+
   /*cambio de color en botones*/
   .mt-4 a:hover{
     background: #fff;
@@ -13,7 +10,6 @@
   /*busqueda de Categorías*/
   .buscador1{
     padding: 5px;
-   /* padding-right: 500px;*/
     width: 600px;
     border-radius: 5px;
     position: relative;
