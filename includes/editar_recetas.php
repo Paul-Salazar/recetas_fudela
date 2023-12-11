@@ -132,11 +132,26 @@ include_once "../includes/header.php";
                         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Editar</button>
                         <a href="../vistas/crear_recetas.php" class="btn btn-danger">Cancelar</a>
                     </div>
+                    <div class="">
+                        <div class="form-group">
+                            <label for="estado" class=" text-dark font-weight-bold">Estado</label>
+                            <select class="form-control" name="txtEstado" id="txtEstado">
+                                <option value="1">Activada</option>
+                                <option value="0">Desactivada</option>
+                            </select>
+                        </div>
+                        <div>
+
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Editar</button>
+                            <a href="../vistas/crear_recetas.php" class="btn btn-danger">Cancelar</a>
+                        </div>
+
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 <script>
     function abrirImagenAgregar() {
         // Función para abrir el cuadro de diálogo de selección de archivo
@@ -160,4 +175,7 @@ include_once "../includes/header.php";
     }
 
 </script>
+
+</div>
+
 <?php include_once "../includes/footer.php"; ?>

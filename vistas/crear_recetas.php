@@ -126,7 +126,11 @@ if ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2) {
                                         <!-- Previsualizar la imagen que se sube 
                                         <img src="../assets/img/vacio.jpg" alt="Foto de receta temporal" height="150px" class="btn-block" id="previewImagen">
                                         -->
+
                                         <!-- Cambia de enlace al input para abrir la imagen -->
+
+                                        <!-- Cambiado a enlace -->
+
                                         <a href="#" class="btn btn-primary btn-block" onclick="abrirImagenAgregar()">Seleccionar</a>
                                         <!-- Se agrega un input de tipo archivo oculto con el atributo accept -->
                                         <input type="file" class="form-control" name="txtImagen" id="txtImagenInput" style="display: none" accept=".jpg, .jpeg, .png" onchange="mostrarPreview()">
