@@ -25,12 +25,20 @@ include "../includes/header.php";
             // Número de registros por página de categorias.
             $registros_por_pagina = 5;
 
+
+            // Obtener el total de registros
+            $total_registros_query = mysqli_query($conexion, "SELECT COUNT(*) as total FROM categorias WHERE estado = 1");
+            $total_registros_data = mysqli_fetch_assoc($total_registros_query);
+            $total_registros = $total_registros_data['total'];
+
+            // Página actual (por defecto es la primera página)
+
             // Página principal (por defecto es la primera página)
+
             $pagina_actual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 
             // Calcular el offset (inicio del conjunto de resultados para la página actual)
             $offset = ($pagina_actual - 1) * $registros_por_pagina;
-
             $query = mysqli_query($conexion, "SELECT * FROM categorias WHERE estado = 1 LIMIT $offset, $registros_por_pagina");
             $result = mysqli_num_rows($query);
 
@@ -69,7 +77,7 @@ include "../includes/header.php";
         <!-- Agregar la paginación -->
         <div class="col-12 mt-3">
             <?php
-            $total_paginas = ceil($result / $registros_por_pagina);
+            $total_paginas = ceil($total_registros / $registros_por_pagina);
 
             // Mostrar enlaces de paginación
             for ($i = 1; $i <= $registros_por_pagina; $i++) {
