@@ -41,7 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Validar y sanitizar los datos según sea necesario
-
     // Actualizar la base de datos con los valores obtenidos del formulario
     $query = "UPDATE recetas SET nombre = '$nombre', idsubcategoria = '$idsubcategoria', observaciones = '$Observaciones', imagen = '$imagen', fecha = '$fecha', estado = '$estado' WHERE id = $id";
 
@@ -71,6 +70,7 @@ include_once "../includes/header.php";
                 <?php echo isset($alert) ? $alert : ''; ?>
                 <form action="../includes/editar_recetas.php" method="POST" class="p-1" enctype="multipart/form-data">
                     <input type="hidden" name="txtId" value="<?php echo $data['id'] ?>">
+                    <!-- Editar la subcategoría, hace una consulta para traer las subcategorias de la tabla -->
                     <div class="form-group ">
                         <label for="txtidsubcategoria" class="text-dark font-weight-bold">SubCategoría</label>
                         <select class="form-control" id="txtidsubcategoria" name="txtidsubcategoria">
@@ -85,54 +85,79 @@ include_once "../includes/header.php";
 
                         </select>
                     </div>
+                    <!-- Editar el nombre de la receta -->
                     <div class="form-group">
                         <label>Nombre:</label>
                         <input type="text" name="txtNombre" class="form-control" value="<?php echo $data['nombre']; ?>" id="txtNombre" placeholder="nombre" required>
                     </div>
+                    <!-- Editar las observaciones -->
                     <div class="form-group">
                         <label>Observaciones:</label>
                         <input type="text" name="txtObservaciones" class="form-control" value="<?php echo $data['observaciones']; ?>" id="txtObservaciones" placeholder="Observaciones" required>
                     </div>
+                    <!-- Editar la imagen, que se muestre la imagen anterior -->
                     <div class="form-group">
                         <label>Imagen:</label>
+                        <br>
                         <?php
                         $imagenPath = $data['imagen'];
                         if (file_exists($imagenPath)) {
-                            echo '<img src="' . $imagenPath . '" alt="Imagen de receta" height="210px" width="308px">';
+                            echo '<img src="' . $imagenPath . '" alt="Imagen de receta" height="250px" class="btn-block" id="previewImagen">';
                         } else {
-                            echo 'No Disponible';
+                            echo '<img src="../assets/img/vacio.jpg" alt="Imagen de receta" height="250px" class="btn-block" id="previewImagen">';
+                            echo 'Imagen no disponible';
                         }
                         ?>
                         <!-- Se agrega este input oculto para obtener la imagen actual enlazada a la base de datos -->
                         <input type="hidden" name="txtImagenActual" id="txtImagenActual" value="<?php echo $data['imagen']; ?>">
-                        <!--<input type="text" class="form-control" name="txtImagen" id="txtImagen" value="<?php // echo $data['imagen']; 
-                                                                                                            ?>">-->
-                        <input type="file" class="form-control" name="txtImagen" id="txtImagen">
+                        <!-- Cambia de enlace al input para abrir la imagen -->
+                        <a href="#" class="btn btn-primary btn-block" onclick="abrirImagenAgregar()">Modificar</a>
+                        <!-- Se agrega un input de tipo archivo oculto con el atributo accept -->
+                        <input type="file" class="form-control" name="txtImagen" id="txtImagenInput" style="display: none" accept=".jpg, .jpeg, .png" onchange="mostrarPreview()">
                     </div>
-
                     <!-- Agregar la fecha con su hora -->
-
                     <div class="form-group">
                         <label for="txtFecha" class="control-label">Fecha:</label>
                         <input type="datetime-local" class="form-control" name="txtFecha" value="<?php echo isset($data['fecha']) ? date("Y-m-d\TH:i", strtotime($data['fecha'])) : "" ?>" required>
                     </div>
-                    <div class="">
-                        <div class="form-group">
-                            <label for="estado" class=" text-dark font-weight-bold">Estado</label>
-                            <select class="form-control" name="txtEstado" id="txtEstado">
-                                <option value="1">Activada</option>
-                                <option value="0">Desactivada</option>
-                            </select>
-                        </div>
-                        <div>
-
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Editar</button>
-                            <a href="../vistas/crear_recetas.php" class="btn btn-danger">Cancelar</a>
-                        </div>
+                    <!-- Modificar el estado -->
+                    <div class="form-group">
+                        <label for="estado" class=" text-dark font-weight-bold">Estado</label>
+                        <select class="form-control" name="txtEstado" id="txtEstado">
+                            <option value="1">Activada</option>
+                            <option value="0">Desactivada</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Editar</button>
+                        <a href="../vistas/crear_recetas.php" class="btn btn-danger">Cancelar</a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-</div>
+<script>
+    function abrirImagenAgregar() {
+        // Función para abrir el cuadro de diálogo de selección de archivo
+        document.getElementById('txtImagenInput').click();
+    }
+    /* Código para cargar la previsualización de la imagen */
+    function mostrarPreview() {
+        // Función para mostrar la previsualización de la imagen seleccionada
+        var input = document.getElementById('txtImagenInput');
+        var preview = document.getElementById('previewImagen');
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
 <?php include_once "../includes/footer.php"; ?>

@@ -11,54 +11,76 @@ include "../conexion.php";
 
 // Alertas y condiciones para los campos de la primera tabla
 if (!empty($_POST)) {
+    $id = $_POST['id'];
+    $idcategoria = $_POST['idcategoria'];
+    $nombre = $_POST['nombre'];
+    $observaciones = $_POST['observaciones'];
+    $estado = 1;
+    $fecha_creacion = date('Y-m-d');
     $alert = "";
-    if (empty($_POST['idcategoria']) || empty($_POST['nombre']) || empty($_POST['estado']) || empty($_FILES['txtImagen']['name'])) {
+    if (empty($_POST['idcategoria']) || empty($_POST['nombre']) || empty($_FILES['txtImagen']['name']) || empty($_POST["observaciones"])) {
         $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                         Todo los campos son obligatorios
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>';
-    } else {
-        $id = $_POST['id'];
-        $idcategoria = $_POST['idcategoria'];
-        $nombre = $_POST['nombre'];
-        $observaciones = $_POST['observaciones'];
-        $estado = $_POST['estado'];
-        $imagen_temp = $_FILES['txtImagen']['tmp_name'];
-        $fecha_creacion = date('Y-m-d');
-
-        $result = 0;
-        if (empty($id)) {
-            $query = mysqli_query($conexion, "SELECT * FROM subcategorias WHERE nombre = '$nombre' AND estado = 1");
-            $result = mysqli_fetch_array($query);
-            if ($result > 0) {
+    } else {       
+        // Validar si se ha seleccionado una imagen
+        if (!empty($_FILES['txtImagen']['name'])) {
+            $imagen_temp = $_FILES['txtImagen']['tmp_name'];
+            $imagenSubcategoria = "../assets/img/subcategorias/" . $_FILES['txtImagen']['name'];
+            // Obtener la extensión de la imagen
+            $extension = pathinfo($imagenSubcategoria, PATHINFO_EXTENSION);
+            // Verificar si la extensión es jpg, jpeg o png
+            if (!in_array(strtolower($extension), array("jpg", "jpeg", "png"))) {
                 $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            Solo se permiten archivos con extensiones JPG, JPEG y PNG
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>';
+            } else {
+                $result = 0;
+                if (empty($id)) {
+                    $query = mysqli_query($conexion, "SELECT * FROM subcategorias WHERE nombre = '$nombre' AND estado = 1");
+                    $result = mysqli_fetch_array($query);
+                    if ($result > 0) {
+                        $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                         La categoría ya existe
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>';
-            } else {
-                $imagenSubcategoria = "../assets/img/subcategorias/" . $_FILES['txtImagen']['name'];
-                move_uploaded_file($imagen_temp, $imagenSubcategoria);
-                $query_insert = mysqli_query($conexion, "INSERT INTO subcategorias (idcategoria, nombre, observaciones, estado, imagen, fecha_creacion) VALUES ('$idcategoria', '$nombre', '$observaciones', '$estado', '$imagenSubcategoria', '$fecha_creacion')");
-                if ($query_insert) {
-                    $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                    } else {
+                        move_uploaded_file($imagen_temp, $imagenSubcategoria);
+                        $query_insert = mysqli_query($conexion, "INSERT INTO subcategorias (idcategoria, nombre, observaciones, estado, imagen, fecha_creacion) VALUES ('$idcategoria', '$nombre', '$observaciones', '$estado', '$imagenSubcategoria', '$fecha_creacion')");
+                        if ($query_insert) {
+                            $alert = '<div class="alert alert-success alert-dismissible fade show" role="alert">
                         SubCategoría registrada
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>';
-                } else {
-                    $alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        } else {
+                            $alert = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
                         Error al registrar
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>';
+                        }
+                    }
                 }
             }
+        } else {
+            // Mostrar mensaje si no se selecciona una imagen
+            $alert = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    No has seleccionado una imagen
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>';
         }
     }
     mysqli_close($conexion);
@@ -112,17 +134,9 @@ include_once "../includes/header.php";
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="estado" class=" text-dark font-weight-bold">Estado</label>
-                                <select class="form-control" name="estado" id="estado">
-                                    <option value="1">Activada</option>
-                                    <option value="0">Desactivada</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
                                 <label for="txtImagen" class=" text-dark font-weight-bold">Imagen</label>
-                                <input type="file" class="form-control" name="txtImagen" id="txtImagen">
+                                <a href="#" class="btn btn-primary btn-block" onclick="abrirImagenAgregar()">Seleccionar</a>
+                                <input type="file" class="form-control" name="txtImagen" id="txtImagenInput" style="display: none" accept=".jpg, .jpeg, .png" onchange="mostrarPreview()">
                             </div>
                         </div>
                         <!-- Botones de acción -->
@@ -165,14 +179,14 @@ include_once "../includes/header.php";
                                     INNER JOIN categorias ON subcategorias.idcategoria = categorias.id");
                                     $result = mysqli_num_rows($query);
                                     if ($result > 0) {
-                                        while ($data = mysqli_fetch_assoc($query)) { 
+                                        while ($data = mysqli_fetch_assoc($query)) {
                                             if ($data['estado'] == 0) {
                                                 $estado = '<span class="badge badge-danger">Desactivado</span>';
                                             } else if ($data['estado'] == 1) {
                                                 $estado = '<span class="badge badge-info">Activado</span>';
                                             } ?>
                                             <tr>
-                                                
+
                                                 <td><?php echo $data['id']; ?></td>
                                                 <td><?php echo $data['nombrecategoria']; ?></td>
                                                 <td><?php echo $data['nombre']; ?></td>
@@ -209,4 +223,10 @@ include_once "../includes/header.php";
         </div>
     </div>
 </div>
+<script>
+    function abrirImagenAgregar() {
+        // Función para abrir el cuadro de diálogo de selección de archivo en formato solo admitido
+        document.getElementById('txtImagenInput').click();
+    }
+</script>
 <?php include_once "../includes/footer.php"; ?>
