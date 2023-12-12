@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;  // Agregado para finalizar la ejecución después de la redirección
         } else {
             // Obtener la información de la imagen desde la base de datos
-            $query_imagen = mysqli_query($conexion, "SELECT imagen FROM recetas WHERE id = '$id'");
+            $query_imagen = mysqli_query($conexion, "SELECT imagen FROM recetas WHERE id = '$idreceta'");
             $data_imagen = mysqli_fetch_assoc($query_imagen);
             $imagenPath = $data_imagen['imagen'];
             unlink($imagenPath);
@@ -192,7 +192,7 @@ include_once "../includes/header.php";
             reader.readAsDataURL(input.files[0]);
         }
     }
-    
+
 </script>
 
 <?php include_once "../includes/footer.php"; ?>
