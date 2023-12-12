@@ -60,7 +60,7 @@ if ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2) {
                             </button>
                             </div>';
                             } else {
-                            // Mostrar un mensaje de error
+                                // Mostrar un mensaje de error
                                 $alert = '<div class="alert alert-danger" role="alert">
                             Error al registrar la receta
                             </div>';
@@ -157,8 +157,8 @@ if ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2) {
                                     <tr>
                                         <th>Id</th>
                                         <th>Nombre Subategoría</th>
-                                        <th>Nombre</th>
-                                        <th>observaciones</th>
+                                        <th>Nombre Receta</th>
+                                        <th>Observaciones</th>
                                         <th>Imagen</th>
                                         <th>Fecha de Creación</th>
                                         <th>Estado</th>
@@ -184,13 +184,15 @@ if ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2) {
                                                 <td><?php echo $data['nombre_subcategoria']; ?></td>
                                                 <td><?php echo $data['nombre']; ?></td>
                                                 <td><?php echo $data['observaciones']; ?></td>
-                                                <td>
+                                                <td class="text-center">
                                                     <?php
                                                     $imagenPath = $data['imagen'];
                                                     if (file_exists($imagenPath)) {
-                                                        echo '<img src="' . $imagenPath . '" alt="Imagen de receta" height="90px" width="120px">';
+                                                        echo '<div class="d-flex justify-content-center align-items-center">';
+                                                        echo '<img src="' . $imagenPath . '" alt="Imagen de receta" class="img-fluid" id="previewImagen" width="100%">';
+                                                        echo '</div>';
                                                     } else {
-                                                        echo 'No Disponible';
+                                                        echo "No disponible.";
                                                     }
                                                     ?>
                                                 </td>
